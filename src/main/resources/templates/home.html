@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Nume</td>
+                <td>Email</td>
+            </tr>
+        </thead>
+        {{#persons}}
+            <tr>
+                <td><a href="/person/{{id}}">{{name}}</a></td>
+                <td>{{email}}</td>
+            </tr>
+        {{/persons}}
+    </table>
+    <form action="/persons" method="POST" name="changeCredentials">
+        <fieldset>
+            <legend>Adăugați contact</legend>
+            Nume: <input type="text" name="name" id="name"/><label for="name">NAME</label><br />
+            Email: <input type="text" name="email" id="email"/><label for="email"></label><br />
+            <button type="submit">Editați</button>
+        </fieldset>
+    </form>
+</body>
+</html>
