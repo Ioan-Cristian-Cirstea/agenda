@@ -4,19 +4,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ro.esolutions.agenda.entities.Person;
+import ro.esolutions.agenda.models.PersonPhoneModel;
 import ro.esolutions.agenda.repositories.PersonRepository;
+import ro.esolutions.agenda.repositories.PhoneNumberRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Component
 public class PersonService {
     private final PersonRepository personRepository;
+    private final PhoneNumberRepository phoneNumberRepository;
 
     public List<Person> getAllPersons() {
         return personRepository.findAll();
+    }
+
+    public List<PersonPhoneModel> getAllPersonsWithPhoneNumbers() {
+        List<Person> persons = this.getAllPersons();
+        return persons.stream().
+                map(person ->
+                        new PersonPhoneModel(person, phoneNumberRepository.findAllByOwnerId(person.getId()))).
+                                collect(Collectors.toList());
     }
 
     public Optional<Person> getPersonById(long id) {

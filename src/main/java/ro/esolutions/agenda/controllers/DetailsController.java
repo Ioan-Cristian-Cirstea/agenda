@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.esolutions.agenda.entities.Person;
 import ro.esolutions.agenda.services.PersonService;
+import ro.esolutions.agenda.services.PhoneNumberService;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 @RequestMapping("/person/{id}")
 public class DetailsController {
     private final PersonService personService;
+    private final PhoneNumberService phoneNumberService;
 
     @GetMapping
     public String getPersonDetails(Model model, @PathVariable long id){
@@ -21,6 +23,7 @@ public class DetailsController {
         if (personOptional.isEmpty())
             return "person_not_found";
         model.addAttribute("person", personOptional.get());
+        model.addAttribute("phoneNumberList", phoneNumberService.getAllPhoneNumberByOwnerId(id));
         return "details";
     }
 
@@ -39,5 +42,18 @@ public class DetailsController {
         return "redirect:/persons";
     }
 
+    @PostMapping("/addPhoneNumber")
+    public String addPhoneNumber(@PathVariable long id,
+                                      @RequestParam String phoneNumber) {
+        phoneNumberService.addPhoneNumber(phoneNumber, id);
 
+        return "redirect:/person/" + id;
+    }
+
+    @GetMapping("/deletePhoneNumber/{phoneNumberId}")
+    public String deletePhoneNumber(@PathVariable long phoneNumberId) {
+        phoneNumberService.deletePhoneNumberById(phoneNumberId);
+
+        return "redirect:/home";
+    }
 }

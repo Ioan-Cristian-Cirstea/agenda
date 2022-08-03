@@ -1,7 +1,6 @@
 package ro.esolutions.agenda.controllers;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ public class HomeController {
 
     @GetMapping
     public String getAllPersons(Model model) {
-        model.addAttribute("persons", personService.getAllPersons());
+        model.addAttribute("listOfPersons", personService.getAllPersonsWithPhoneNumbers());
         return "home";
     }
 

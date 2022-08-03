@@ -26,9 +26,16 @@
         </thead>
         {{#phoneNumberList}}
             <tr>
-                <td>{{.}}</td>
+                <td>{{number}} <a href="/phoneNumber/{{id}}/delete"><button type="button">-</button></a></td>
             </tr>
         {{/phoneNumberList}}
     </table>
+    <form action="/person/{{id}}/addPhoneNumber" method="POST" name="addPhoneNumber">
+        <fieldset>
+            <legend>Modificați datele</legend>
+            Număr de telefon: <input type="text" name="phoneNumber" id="phoneNumber"/><label for="phoneNumber"></label><br />
+            <button type="submit">Adăugați</button>
+        </fieldset>
+    </form>
 </body>
 </html>
